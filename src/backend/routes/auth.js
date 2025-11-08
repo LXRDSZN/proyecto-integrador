@@ -1,6 +1,6 @@
-// 📁 routes/tareas.js
+// 📁 routes/auth.js
 import { Router } from "express";
-import Tarea from "../models/usuarios/materias.js"; 
+import Tarea from "../models/usuarios/materias.js"; // <-- ajusta la ruta según tu estructura
 
 const router = Router();
 
