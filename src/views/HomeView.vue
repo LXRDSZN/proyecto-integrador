@@ -52,8 +52,7 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import api from "@/backend/services/api";
 export default {
   name: "HomeViewPage",
   data() {
@@ -69,7 +68,7 @@ export default {
   methods: {
     async cargarTareas() {
       try {
-        const res = await axios.get("http://localhost:5000/api/tareas");
+        const res = await api.get("/tareas");
         this.tareas = res.data;
       } catch (error) {
         console.error("❌ Error al cargar tareas:", error);
@@ -81,14 +80,12 @@ export default {
 
       try {
         if (this.editandoId) {
-          // Actualizar tarea
-          await axios.put(`http://localhost:5000/api/tareas/${this.editandoId}`, {
+          await api.put(`/tareas/${this.editandoId}`, {
             titulo: this.nuevoTituloTarea.trim(),
           });
           this.editandoId = null;
         } else {
-          // Crear nueva tarea
-          await axios.post("http://localhost:5000/api/tareas", {
+          await api.post("/tareas", {
             titulo: this.nuevoTituloTarea.trim(),
           });
         }
@@ -101,7 +98,7 @@ export default {
 
     async toggleHecho(tarea) {
       try {
-        await axios.put(`http://localhost:5000/api/tareas/${tarea._id}`, {
+        await api.put(`/tareas/${tarea._id}`, {
           hecho: !tarea.hecho,
         });
         await this.cargarTareas();
@@ -118,7 +115,7 @@ export default {
     async BorrarTarea(id) {
       if (!confirm("¿Deseas eliminar la tarea?")) return;
       try {
-        await axios.delete(`http://localhost:5000/api/tareas/${id}`);
+        await api.delete(`/tareas/${id}`);
         await this.cargarTareas();
       } catch (error) {
         console.error("❌ Error al eliminar tarea:", error);

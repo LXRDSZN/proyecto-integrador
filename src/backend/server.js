@@ -2,8 +2,9 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connectDB from './models/db.js';
-import authRoutes from './routes/auth.js';    
+import tareasRoutes from './routes/auth.js';  // 👈 usa el archivo que ya tienes
 /* eslint-env node */
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -18,19 +19,19 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Middleware para parsear JSON en el body de las peticiones
+// Middleware para parsear JSON
 app.use(express.json());
 app.use(cookieParser());
 
-// Rutas API
-app.use('/api', authRoutes);
+// ✅ Monta tus rutas de tareas
+app.use('/api', tareasRoutes);
 
-// Ruta raíz (para que no marque "Cannot GET /")
+// ✅ Ruta raíz para comprobar funcionamiento
 app.get('/', (req, res) => {
-  res.send('🚀 Backend del proyecto integrador en funcionamiento correctamente');
+  res.send('🚀 Backend del proyecto integrador funcionando correctamente');
 });
 
-// Inicia el servidor
+// ✅ Inicia servidor
 app.listen(port, () => {
   console.log(`✅ Servidor corriendo en el puerto ${port}`);
 });

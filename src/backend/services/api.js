@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-// Crear instancia de Axios con la configuración básica
+// Detecta automáticamente si estás en desarrollo o producción
+const baseURL = import.meta.env.PROD
+  ? 'https://proyecto-integrador-hibe.onrender.com/api' 
+  : 'http://localhost:5000/api'; 
+
+// Crear instancia de Axios con la configuración base
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // URL del backend
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-console.log(api)
+export default api;
